@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nithish Kumar — Catalog &amp; Enrollment Module</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">AASATS</span>
+      <span class="brand-sub">Advanced Academic Slot Allocation &amp; Tracking System</span>
+    </div>
+    <div class="module-tag">
+      <span class="module-tag-uc">UC-01 · UC-04</span>
+      <span class="module-tag-name">Catalog &amp; Enrollment — Nithish Kumar (24MIS0424)</span>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <section class="panel catalog-panel">
+      <div class="panel-head">
+        <h1>Live Course Catalog</h1>
+        <input id="searchInput" type="text" placeholder="Search by code, title or professor…" autocomplete="off">
+      </div>
+      <div id="catalogGrid" class="catalog-grid"></div>
+      <p id="emptyState" class="empty-state hidden">No active courses available for this registration window.</p>
+    </section>
+
+    <aside class="panel timetable-panel">
+      <div class="panel-head">
+        <h1>My Timetable Matrix</h1>
+        <span class="credit-counter" id="creditCounter">0 / 24 credits</span>
+      </div>
+
+      <div id="timetableGrid" class="timetable-grid"></div>
+
+      <div class="registered-list-wrap">
+        <h2>Locked Courses</h2>
+        <ul id="registeredList" class="registered-list">
+          <li class="registered-empty">Nothing locked in yet — register a course from the catalog.</li>
+        </ul>
+      </div>
+    </aside>
+
+  </main>
+
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

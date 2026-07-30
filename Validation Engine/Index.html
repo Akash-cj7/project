@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akash K — Validation Engine Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">AASATS</span>
+      <span class="brand-sub">Advanced Academic Slot Allocation &amp; Tracking System</span>
+    </div>
+    <div class="module-tag">
+      <span class="module-tag-uc">UC-02 · UC-03</span>
+      <span class="module-tag-name">Validation Engine — Akash K (24MIS0457)</span>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <section class="panel">
+      <h1>Registered Slot Ledger</h1>
+      <p class="hint">This is the student's current <code>registeredSlots</code> array. Add slots to it, then run checks against a new incoming slot below.</p>
+      <div class="ledger" id="slotLedger"></div>
+      <div class="row">
+        <input id="ledgerInput" class="mono" type="text" maxlength="3" placeholder="e.g. A1">
+        <button id="ledgerAdd" class="btn">Add to ledger</button>
+        <button id="ledgerClear" class="btn btn-ghost">Clear</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h1>UC-02 — Slot Clash Tester</h1>
+      <p class="hint">Checks a candidate slot code against the ledger above. Must resolve in under 100 ms.</p>
+      <div class="row">
+        <input id="clashInput" class="mono" type="text" maxlength="3" placeholder="Candidate slot, e.g. A1">
+        <button id="clashRun" class="btn">Check Clash</button>
+      </div>
+      <div id="clashResult" class="result"></div>
+    </section>
+
+    <section class="panel">
+      <h1>UC-03 — Seat Capacity Tester</h1>
+      <p class="hint">Checks the live seat pool for a course before it can be locked.</p>
+      <div class="row">
+        <select id="courseSelect" class="mono"></select>
+        <button id="capacityRun" class="btn">Check Capacity</button>
+      </div>
+      <div id="capacityResult" class="result"></div>
+    </section>
+
+    <section class="panel wide">
+      <h1>Full Pipeline Simulation</h1>
+      <p class="hint">Runs UC-02 then UC-03 in sequence exactly as UC-04 would trigger them, and logs each step with a timestamp.</p>
+      <div class="row">
+        <select id="pipelineSelect" class="mono"></select>
+        <button id="pipelineRun" class="btn">Run Pipeline</button>
+        <button id="pipelineReset" class="btn btn-ghost">Reset Log</button>
+      </div>
+      <pre id="pipelineLog" class="log"></pre>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

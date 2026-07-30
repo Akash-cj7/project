@@ -86,7 +86,7 @@ code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
   font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.7;
   min-height:70px;max-height:220px;overflow-y:auto;white-space:pre-wrap;margin:0;
 }
-.log .ok{color:#8FE0BC;}
+.log .ok{color:#b3e08f;}
 .log .bad{color:#F3AEB4;}
 
 .blueprint-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}

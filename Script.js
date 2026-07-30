@@ -7,7 +7,7 @@
    newly configured courses straight into the shared course catalog
    used by Nithish's module.
 =================================================================== */
-
+agile
 let configuredCourses = [
   { code:'CSE3001', slot:'A1', credits:4, maxSeats:60 },
   { code:'CSE3002', slot:'B1', credits:4, maxSeats:60 },

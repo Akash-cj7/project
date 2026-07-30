@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nithish Kumar — Catalog &amp; Enrollment Module</title>
+<title>Om Prakash — Admin &amp; DevOps Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -16,41 +16,103 @@
       <span class="brand-sub">Advanced Academic Slot Allocation &amp; Tracking System</span>
     </div>
     <div class="module-tag">
-      <span class="module-tag-uc">UC-01 · UC-04</span>
-      <span class="module-tag-name">Catalog &amp; Enrollment — Nithish Kumar (24MIS0424)</span>
+      <span class="module-tag-uc">UC-05 · UC-06</span>
+      <span class="module-tag-name">Admin &amp; DevOps — AKASH (24MIS0562)</span>
     </div>
   </header>
 
   <main class="layout">
 
-    <section class="panel catalog-panel">
-      <div class="panel-head">
-        <h1>Live Course Catalog</h1>
-        <input id="searchInput" type="text" placeholder="Search by code, title or professor…" autocomplete="off">
-      </div>
-      <div id="catalogGrid" class="catalog-grid"></div>
-      <p id="emptyState" class="empty-state hidden">No active courses available for this registration window.</p>
+    <section class="panel">
+      <h1>Configure Course Capacity Limits</h1>
+      <p class="hint">Academic Systems Administrator sets up new course modules, slot codes, and seat ceilings before a registration window opens.</p>
+
+      <form id="courseForm" class="form-grid" novalidate>
+        <label>Course code
+          <input type="text" id="f_code" class="mono" placeholder="CSE3051" required>
+        </label>
+        <label>Title
+          <input type="text" id="f_title" placeholder="Distributed Systems" required>
+        </label>
+        <label>Professor
+          <input type="text" id="f_prof" placeholder="Dr. N. Sharma" required>
+        </label>
+        <label>Slot code
+          <input type="text" id="f_slot" class="mono" maxlength="3" placeholder="F1" required>
+        </label>
+        <label>Credits
+          <input type="number" id="f_credits" min="1" max="6" placeholder="3" required>
+        </label>
+        <label>Max seat capacity
+          <input type="number" id="f_capacity" min="0" placeholder="50" required>
+        </label>
+        <button type="submit" class="btn wide-btn">Commit Configuration</button>
+      </form>
+      <div id="formAlert" class="alert hidden"></div>
     </section>
 
-    <aside class="panel timetable-panel">
-      <div class="panel-head">
-        <h1>My Timetable Matrix</h1>
-        <span class="credit-counter" id="creditCounter">0 / 24 credits</span>
-      </div>
+    <section class="panel">
+      <h1>Configured Course Modules</h1>
+      <table class="config-table">
+        <thead>
+          <tr><th>Code</th><th>Slot</th><th>Cr</th><th>Capacity</th><th></th></tr>
+        </thead>
+        <tbody id="configTableBody"></tbody>
+      </table>
+    </section>
 
-      <div id="timetableGrid" class="timetable-grid"></div>
-
-      <div class="registered-list-wrap">
-        <h2>Locked Courses</h2>
-        <ul id="registeredList" class="registered-list">
-          <li class="registered-empty">Nothing locked in yet — register a course from the catalog.</li>
-        </ul>
+    <section class="panel wide">
+      <h1>Trigger Automated Container Deployment</h1>
+      <p class="hint">Simulates the GitHub Actions runner reacting to a push on <code class="mono">main</code>: install deps → lint → build → containerize.</p>
+      <div class="row">
+        <button id="pushBtn" class="btn">Simulate push to main</button>
+        <label class="inject-toggle">
+          <input type="checkbox" id="injectFail"> inject lint failure
+        </label>
       </div>
-    </aside>
+      <div id="pipelineSteps" class="pipeline-steps"></div>
+      <pre id="ciLog" class="log"></pre>
+    </section>
+
+    <section class="panel wide">
+      <h1>Containerization Blueprint</h1>
+      <div class="blueprint-grid">
+        <div>
+          <h2>Dockerfile</h2>
+          <pre class="code-block">FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM nginx:1.27-alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]</pre>
+        </div>
+        <div>
+          <h2>.github/workflows/ci.yml</h2>
+          <pre class="code-block">name: CI
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: docker build -t aasats-frontend .</pre>
+        </div>
+      </div>
+    </section>
 
   </main>
-
-  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>

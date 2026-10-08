@@ -1,0 +1,51 @@
+package com.example.slotallocation;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class SlotAllocationApplicationTests {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void testGetAvailableSlots() throws Exception {
+        mockMvc.perform(get("/api/slots"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testAllocateSlotSuccess() throws Exception {
+        mockMvc.perform(post("/api/slots/allocate/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Slot 1 successfully allocated!"));
+    }
+
+    @Test
+    void testAllocateAlreadyBookedSlot() throws Exception {
+        // Book the slot first time
+        mockMvc.perform(post("/api/slots/allocate/2"));
+
+        // Try booking the same slot again
+        mockMvc.perform(post("/api/slots/allocate/2"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Slot is already booked."));
+    }
+
+    @Test
+    void testAllocateNonExistentSlot() throws Exception {
+        mockMvc.perform(post("/api/slots/allocate/999"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("Slot not found."));
+    }
+}

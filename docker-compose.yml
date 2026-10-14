@@ -1,0 +1,16 @@
+services:
+  aasats-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: aasats-web:latest
+    container_name: aasats-web-container
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

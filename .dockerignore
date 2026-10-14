@@ -1,0 +1,10 @@
+.git
+.gitignore
+.vscode
+Jenkinsfile
+docker-compose*.yml
+README.md
+java code1
+java test code
+xml code
+*.log
